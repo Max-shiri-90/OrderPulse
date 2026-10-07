@@ -3,6 +3,8 @@ package server
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/Max-shiri-90/OrderPulse/internal/http/handler"
 )
 
 type Server struct {
@@ -12,7 +14,7 @@ type Server struct {
 func NewServer(port int) *Server {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/health", healthHandler)
+	mux.HandleFunc("/health", handler.Health)
 
 	return &Server{
 		httpServer: &http.Server{
@@ -24,8 +26,4 @@ func NewServer(port int) *Server {
 
 func (s *Server) Start() error {
 	return s.httpServer.ListenAndServe()
-}
-
-func healthHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "OrderPulse is healthy")
 }
