@@ -9,11 +9,11 @@ type Config struct {
 	DBName     string
 	DBUser     string
 	DBPassword string
+	JWTSecret  string
 }
 
 func Load() Config {
 	port := os.Getenv("HTTP_PORT")
-
 	if port == "" {
 		port = "8080"
 	}
@@ -40,6 +40,8 @@ func Load() Config {
 
 	dbPassword := os.Getenv("DB_PASSWORD")
 
+	jwtSecret := os.Getenv("JWT_SECRET")
+
 	return Config{
 		HTTPPort:   port,
 		DBHost:     dbHost,
@@ -47,5 +49,6 @@ func Load() Config {
 		DBName:     dbName,
 		DBUser:     dbUser,
 		DBPassword: dbPassword,
+		JWTSecret:  jwtSecret,
 	}
 }

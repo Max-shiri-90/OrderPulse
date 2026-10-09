@@ -12,6 +12,10 @@ import (
 func main() {
 	cfg := config.Load()
 
+	if cfg.JWTSecret == "" {
+		log.Fatal("JWT_SECRET is required")
+	}
+
 	port, err := strconv.Atoi(cfg.HTTPPort)
 	if err != nil {
 		log.Fatal("invalid HTTP_PORT:", err)
@@ -29,7 +33,7 @@ func main() {
 	}
 	defer db.Close()
 
-	app := server.NewServer(port, db)
+	app := server.NewServer(port, db, cfg.JWTSecret)
 
 	log.Println("OrderPulse is running on :" + cfg.HTTPPort)
 
